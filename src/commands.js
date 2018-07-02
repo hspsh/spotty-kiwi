@@ -4,6 +4,6 @@ module.exports = [
   {
     name: '/ktohakuje',
     waitMessage: 'Rozpoczynam skanowanie spejsu...',
-    handler: async req => getWhois(req.user)
+    handler: async req => getWhois(req.user_id)
   }
 ]
