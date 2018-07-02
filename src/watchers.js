@@ -10,7 +10,7 @@ module.exports = [
     types: [undefined],
     trigger: substringTrigger(['jest ktoś', 'ktoś jest', 'kto jest']),
     handle: (message, client) => {
-      getWhois().then(response => {
+      getWhois(message.user).then(response => {
         client.rtm.sendMessage(response, message.channel)
       })
     }
