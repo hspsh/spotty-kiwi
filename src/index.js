@@ -21,7 +21,7 @@ commands.forEach(command => {
         })
       }
     })
-    
+
     res.send(command.waitMessage)
   })
 })
