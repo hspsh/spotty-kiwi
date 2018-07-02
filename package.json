@@ -1,6 +1,6 @@
 {
   "name": "spotty-kiwi",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A custom Slack bot that reports hackerspace presence",
   "main": "src/index.js",
   "scripts": {
