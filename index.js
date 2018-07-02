@@ -14,9 +14,11 @@ app.use(bodyParser.json())
 commands.forEach(command => {
   app.post(command.name, (req, res) => {
     command.handler(req.body).then(response => {
-
       if (typeof response !== 'undefined') {
-        client.chat.postMessage({ channel: req.body.channel_id, text: response })
+        client.chat.postMessage({
+          channel: req.body.channel_id,
+          text: response
+        })
       }
     })
 
