@@ -1,21 +1,26 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const { WebClient } = require('@slack/client')
+const { WebClient, RTMClient } = require('@slack/client')
 
+const config = require('../config')
 const commands = require('./commands')
+const watchers = require('./watchers')
 
 const app = express()
 
-const client = new WebClient(process.env.BOT_TOKEN)
-
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+
+const client = {
+  web: new WebClient(process.env.BOT_TOKEN),
+  rtm: new RTMClient(process.env.BOT_TOKEN)
+}
 
 commands.forEach(command => {
   app.post(command.name, (req, res) => {
     command.handler(req.body).then(response => {
       if (typeof response !== 'undefined') {
-        client.chat.postMessage({
+        client.web.chat.postMessage({
           channel: req.body.channel_id,
           text: response
         })
@@ -26,7 +31,19 @@ commands.forEach(command => {
   })
 })
 
-
 app.listen(process.env.PORT)
+console.log('Listening for commands')
 
-console.log('Listening')
+client.rtm.start()
+
+watchers.forEach(watcher => {
+  client.rtm.on('message', message => {
+    if (watcher.types.includes(message.subtype)) {
+      if (watcher.trigger(message)) {
+        watcher.handle(message, client)
+      }
+    }
+  })
+})
+
+console.log('Watchers configured')
