@@ -2,7 +2,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const { WebClient, RTMClient } = require('@slack/client')
 
-const config = require('../config')
 const commands = require('./commands')
 const watchers = require('./watchers')
 
