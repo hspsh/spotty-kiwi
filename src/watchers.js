@@ -3,7 +3,7 @@ const { removeDiacritics } = require('./util')
 
 const substringTrigger = strings => message =>
   strings.some(string =>
-    removeDiacritics(message.text.toLowerCase()).includes(string))
+    message.text.toLowerCase().includes(string))
 
 module.exports = [
   {
