@@ -9,7 +9,10 @@ module.exports = {
     },
     "rules": {
         "accessor-pairs": "error",
-        "array-bracket-newline": "error",
+        "array-bracket-newline": [
+          "error",
+          { "multiline": true }
+        ],
         "array-bracket-spacing": [
             "error",
             "never"
@@ -59,11 +62,14 @@ module.exports = {
         "consistent-this": "error",
         "curly": "error",
         "default-case": "error",
-        "dot-location": "error",
+        "dot-location": [
+          "error",
+          "property"
+        ],
         "dot-notation": "error",
         "eol-last": [
             "error",
-            "never"
+            "always"
         ],
         "eqeqeq": "error",
         "func-call-spacing": "error",
@@ -80,10 +86,7 @@ module.exports = {
         "handle-callback-err": "error",
         "id-blacklist": "error",
         "id-match": "error",
-        "implicit-arrow-linebreak": [
-            "error",
-            "beside"
-        ],
+        "implicit-arrow-linebreak": "off",
         "indent": [
           "error",
           2
@@ -193,7 +196,7 @@ module.exports = {
         "no-throw-literal": "error",
         "no-trailing-spaces": "off",
         "no-undef-init": "error",
-        "no-undefined": "error",
+        "no-undefined": "off",
         "no-underscore-dangle": "error",
         "no-unmodified-loop-condition": "error",
         "no-unneeded-ternary": "error",
@@ -247,10 +250,13 @@ module.exports = {
             "single"
         ],
         "radix": "error",
-        "require-await": "error",
+        "require-await": "off",
         "require-jsdoc": "error",
         "rest-spread-spacing": "error",
-        "semi": "off",
+        "semi": [
+          "error",
+          "never"
+        ],
         "semi-spacing": "error",
         "semi-style": "error",
         "sort-imports": "error",
