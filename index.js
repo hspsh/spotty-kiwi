@@ -1,8 +1,8 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const { WebClient } = require('@slack/client')
+import express from 'express'
+import bodyParser from 'body-parser'
+import { WebClient } from '@slack/client'
 
-const commands = require('./commands')
+import commands from './commands'
 
 const app = express()
 
@@ -19,7 +19,7 @@ commands.forEach(command => {
         client.chat.postMessage({ channel: req.body.channel_id, text: response })
       }
     })
-    
+
     res.send(command.waitMessage)
   })
 })
