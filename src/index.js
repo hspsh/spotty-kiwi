@@ -10,11 +10,14 @@ const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
+console.log('Connecting to workspace...')
+
 const client = {
   web: new WebClient(process.env.BOT_TOKEN),
   rtm: new RTMClient(process.env.BOT_TOKEN)
 }
 
+console.log('Registering command handlers...')
 commands.forEach(command => {
   app.post(command.name, (req, res) => {
     command.handler(req.body).then(response => {
@@ -31,9 +34,10 @@ commands.forEach(command => {
 })
 
 app.listen(process.env.PORT)
-console.log('Listening for commands')
 
 client.rtm.start()
+
+console.log('Registering watchers...')
 
 watchers.forEach(watcher => {
   client.rtm.on('message', message => {
@@ -45,4 +49,4 @@ watchers.forEach(watcher => {
   })
 })
 
-console.log('Watchers configured')
+console.log('Up and running!')
