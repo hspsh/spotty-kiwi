@@ -16,8 +16,9 @@ const formatStatus = (data, user) => {
   const [verb, noun] = units >= 2 && units <= 4
     ? ['są', 'osoby']
     : ['jest', 'osób']
-  return `${mention}, w spejsie ${verb} ${data.headcount} ${noun}:\
-    ${data.users.join(', ')}`
+
+  return `${mention}, w spejsie ${verb} ${data.headcount} ${noun}:` +
+    ` ${data.users.join(', ')}`
 }
 
 const getWhois = async user => {
