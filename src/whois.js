@@ -22,7 +22,7 @@ const formatStatus = (data, user) => {
 }
 
 const getWhois = async user => {
-  const data = (await axios.get('https://at.hs3.pl/api/now')).data
+  const data = (await axios.get('https://whois.at.hs3.pl/api/now')).data
   return formatStatus(data, user)
 }
 
