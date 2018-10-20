@@ -1,0 +1,8 @@
+#!/bin/sh
+REQURED_NODE_VERSION=v8.12.0 # must match README.md
+
+NODE_VERSION=$(node --version 2>/dev/null)
+YARN_VERSION=$(yarn -v 2>/dev/null)
+
+(test "$NODE_VERSION" = "$REQURED_NODE_VERSION" || echo "Err: Your Node version does not match $REQURED_NODE_VERSION") 2>/dev/null
+test "$YARN_VERSION" || echo "Err: Yarn is not present"
