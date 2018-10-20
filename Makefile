@@ -17,7 +17,7 @@ docker:
 	docker build -t transaction_tagger -f ./Dockerfile . 
 
 
-.PHONY: lint unit e2e spin-up-development-server open-coverage-report unit-coverage
+.PHONY: lint unit spin-up-development-server open-coverage-report unit-coverage
 lint:
 	yarn run lint
 unit:
