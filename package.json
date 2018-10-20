@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node -r dotenv/config src/index.js",
-    "test": "eslint src"
+    "lint": "eslint src",
+    "test": "jest"
   },
   "dependencies": {
     "@slack/client": "^4.3.1",
@@ -26,6 +27,7 @@
     "express"
   ],
   "devDependencies": {
-    "eslint": "^5.0.1"
+    "eslint": "^5.0.1",
+    "jest": "^23.6.0"
   }
 }
