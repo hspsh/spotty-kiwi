@@ -3674,6 +3674,11 @@ pn@^1.1.0:
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
   integrity sha512-2qHaIQr2VLRFoxe2nASzsV6ef4yOOH+Fi9FBOVH6cqeSgUnoyySPZkxzLuzd+RYOQTRpROA0ztTMqxROKSb/nA==
 
+polish-plurals@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/polish-plurals/-/polish-plurals-1.1.0.tgz#c512cc06df8881c7f199dd12aba197552c3dada8"
+  integrity sha512-Sect6u4dScUC15pUZGhbfr7Q5o6CRAIpBj/KdkYf27EUa5Ls6+MkK5LXUH3PQL5aPAmFGnmJMXhdXzNLGc5V5A==
+
 posix-character-classes@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"

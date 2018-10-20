@@ -11,7 +11,7 @@ describe("formatStatus", () => {
         });
         it("0 registered, 2 unregistered", () => {
                 expect(formatStatus({headcount: 0, unknown_devices: 2, users: []}, "test_user"))
-                .toBe("<@test_user>, Hackerspace jest oficjalnie pusty, natomiast jest 2 anonimowe urządzenia.");
+                .toBe("<@test_user>, Hackerspace jest oficjalnie pusty, natomiast są 2 anonimowe urządzenia.");
         });
         it("0 registered, 5 unregistered", () => {
                 expect(formatStatus({headcount: 0, unknown_devices: 5, users: []}, "test_user"))
@@ -19,7 +19,7 @@ describe("formatStatus", () => {
         });
         it("1 registered, 0 unregistered", () => {
                 expect(formatStatus({headcount: 1, unknown_devices: 0, users: ["test"]}, "test_user"))
-                .toBe("<@test_user>, w spejsie jest jedna osoba: test.");
+                .toBe("<@test_user>, w spejsie jest 1 osoba: test.");
         });
         it("2 registered, 0 unregistered", () => {
                 expect(formatStatus({headcount: 2, unknown_devices: 0, users: ["test", "other_test"]}, "test_user"))
@@ -31,11 +31,11 @@ describe("formatStatus", () => {
         });
         it("5 registered, 0 unregistered", () => {
                 expect(formatStatus({headcount: 5, unknown_devices: 0, users: ["test", "other_test", "hacker", "1337", "devops"]}, "test_user"))
-                .toBe("<@test_user>, w spejsie jest 5 osób: test, other_test, hacker, 1337, devop.s");
+                .toBe("<@test_user>, w spejsie jest 5 osób: test, other_test, hacker, 1337, devops.");
         });
         it("1 registered, 1 unregistered", () => {
                 expect(formatStatus({headcount: 1, unknown_devices: 1, users: ["test"]}, "test_user"))
-                .toBe("<@test_user>, w spejsie jest jedna osoba: test oraz 1 animowe urządzenie.");
+                .toBe("<@test_user>, w spejsie jest 1 osoba: test oraz 1 anonimowe urządzenie.");
         });
         it("2 registered, 1 unregistered", () => {
                 expect(formatStatus({headcount: 2, unknown_devices: 1, users: ["test", "other_test"]}, "test_user"))
@@ -51,7 +51,7 @@ describe("formatStatus", () => {
         });
         it("1 registered, 2 unregistered", () => {
                 expect(formatStatus({headcount: 1, unknown_devices: 2, users: ["test"]}, "test_user"))
-                .toBe("<@test_user>, w spejsie jest jedna osoba: test oraz 2 anonimowe urządzenia.");
+                .toBe("<@test_user>, w spejsie jest 1 osoba: test oraz 2 anonimowe urządzenia.");
         });
         it("2 registered, 2 unregistered", () => {
                 expect(formatStatus({headcount: 2, unknown_devices: 2, users: ["test", "other_test"]}, "test_user"))
@@ -67,7 +67,7 @@ describe("formatStatus", () => {
         });
         it("1 registered, 5 unregistered", () => {
                 expect(formatStatus({headcount: 1, unknown_devices: 5, users: ["test"]}, "test_user"))
-                .toBe("<@test_user>, w spejsie jest jedna osoba: test oraz 5 anonimowych urządzeń.");
+                .toBe("<@test_user>, w spejsie jest 1 osoba: test oraz 5 anonimowych urządzeń.");
         });
         it("2 registered, 5 unregistered", () => {
                 expect(formatStatus({headcount: 2, unknown_devices: 5, users: ["test", "other_test"]}, "test_user"))
