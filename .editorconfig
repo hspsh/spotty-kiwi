@@ -6,8 +6,10 @@ end_of_line = lf
 trim_trailing_newspace = true
 insert_final_newline = true
 
+[*.test.js]
+max_line_length = off
+
 [*.js]
 indent_style = space
-indent_size = 2
-max_line_length = 80
-
+indent_size = 4
+max_line_length = 100
