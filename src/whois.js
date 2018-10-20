@@ -1,24 +1,23 @@
 const axios = require('axios')
 
+const getCorrectVerbAndNoun = (amount, zeroVerb, zeroNoun, singularVerb, singularNoun, exceptionalPluralVerb, exceptionalPluralNoun, exceptionalPluralRange=0, typicalPluralVerb, typicalPluralNoun) => {
+  if (amount == 0) {
+    return [`${zeroVerb}`, `${zeroNoun}`]
+  }  else if (amount == 1) {
+    return [`${singularVerb}`, `${singularNoun}`]
+  } else if (exceptionalPluralRange == 0) {
+    return [`${typicalPluralVerb}`, `${typicalPluralNoun}`]
+  } else if (amount <= exceptionalPluralRange) {
+    return [`${exceptionalPluralVerb}`, `${exceptionalPluralNoun}`]
+  }
+
 const formatStatus = (data, user) => {
   const mention = `<@${user}>`
-
-  if (data.headcount === 0) {
-    return `${mention}, Hackerspace jest oficjalnie pusty, natomiast jest ${data.unknown_devices} anonimowych urządzeń.`
-  }
-
-  if (data.headcount === 1) {
-    return `${mention}, w spejsie jest jedna osoba: ${data.users[0]} oraz ${data.unknown_devices} anonimowych urządzeń.`
-  }
-
-  // TODO: extract pluralization logic
-  const units = data.headcount % 10
-  const [verb, noun] = units >= 2 && units <= 4
-    ? ['są', 'osoby']
-    : ['jest', 'osób']
-
-  return `${mention}, w spejsie ${verb} ${data.headcount} ${noun}:` +
-    ` ${data.users.join(', ')} oraz ${data.unknown_devices} anonimowych urządzeń.`
+  const [users_verb, users_noun] = getCorrectVerbAndNoun(${data.headcount}, 'jest', 'osób', 'jest', 'osoba', 'są', 'osoby', 4, 'jest', 'osób')
+  const [devices_verb, devices_noun] = getCorrectVerbAndNoun(${data.unknown_devices}, 'jest' 'niezidentyfikowanych urządze', 'jest', 'niezidentyfikowane urządzenie', 'są', 'niezidentifikowane urządzenia', 4, 'jest', 'niezidentyfikowanych urządzeń')
+  
+  return `${mention}, w spejsie ${users_verb} ${data.headcount} ${devices_noun}:` +
+    `${data.users.join(', ')} oraz ${devices_verb} ${data.unknown_devices} ${devices_noun}.`
 }
 
 const getWhois = async user => {
