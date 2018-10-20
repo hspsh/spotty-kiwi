@@ -4,11 +4,11 @@ const formatStatus = (data, user) => {
   const mention = `<@${user}>`
 
   if (data.headcount === 0) {
-    return `${mention}, Hackerspace jest pusty`
+    return `${mention}, Hackerspace jest oficjalnie pusty, natomiast jest ${data.unknown_devices} anonimowych urządzeń.`
   }
 
   if (data.headcount === 1) {
-    return `${mention}, w spejsie jest jedna osoba: ${data.users[0]}`
+    return `${mention}, w spejsie jest jedna osoba: ${data.users[0]} oraz ${data.unknown_devices} anonimowych urządzeń.`
   }
 
   // TODO: extract pluralization logic
@@ -18,7 +18,7 @@ const formatStatus = (data, user) => {
     : ['jest', 'osób']
 
   return `${mention}, w spejsie ${verb} ${data.headcount} ${noun}:` +
-    ` ${data.users.join(', ')}`
+    ` ${data.users.join(', ')} oraz ${data.unknown_devices} anonimowych urządzeń.`
 }
 
 const getWhois = async user => {
