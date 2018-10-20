@@ -27,5 +27,6 @@ const getWhois = async user => {
 }
 
 module.exports = {
-  getWhois
+  getWhois,
+  formatStatus,
 }
