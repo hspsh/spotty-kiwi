@@ -6,7 +6,7 @@ $(error $(CHECK_PREREQUISITES))
 endif
 
 
-.PHONY: serve build test report docker
+.PHONY: serve test report docker
 serve: node_modules spin-up-development-server
 
 test: node_modules lint unit
@@ -14,14 +14,14 @@ test: node_modules lint unit
 report: node_modules unit-coverage open-coverage-report
 
 docker:
-	docker build -t transaction_tagger -f ./Dockerfile . 
+	docker -t spotty-kiwi -f ./Dockerfile . 
 
 
 .PHONY: lint unit spin-up-development-server open-coverage-report unit-coverage
 lint:
 	yarn run lint
 unit:
-	yarn run test:unit
+	yarn run test
 spin-up-development-server:
 	yarn run serve
 open-coverage-report:
