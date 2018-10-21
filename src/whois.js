@@ -1,32 +1,41 @@
-const axios = require('axios')
+const axios = require("axios");
+const { polishPlurals: _polishPlural } = require("polish-plurals");
+const polishPlural = (a, b, c) => x => _polishPlural(a, b, c, x);
 
-const formatStatus = (data, user) => {
-  const mention = `<@${user}>`
+const personPlural = polishPlural("osoba", "osoby", "osób");
+const existPlural = polishPlural("jest", "są", "jest");
+const devicePlural = polishPlural("urządzenie", "urządzenia", "urządzeń");
+const anonymousPlural = polishPlural("anonimowe", "anonimowe", "anonimowych");
+const anonymouDevicePlural = devices => `${anonymousPlural(devices)} ${devicePlural(devices)}`;
 
-  if (data.headcount === 0) {
-    return `${mention}, Hackerspace jest oficjalnie pusty, natomiast jest ${data.unknown_devices} anonimowych urządzeń.`
-  }
+const deviceCountMessage = devices => `${devices} ${anonymouDevicePlural(devices)}`;
+const manyPeopleCountMessage = people => `${existPlural(people)} ${people} ${personPlural(people)}`;
 
-  if (data.headcount === 1) {
-    return `${mention}, w spejsie jest jedna osoba: ${data.users[0]} oraz ${data.unknown_devices} anonimowych urządzeń.`
-  }
+const existDeviceCountMessage = devices => `${existPlural(devices)} ${deviceCountMessage(devices)}`;
+const andDeviceCountMessage = devices => devices ? ` oraz ${deviceCountMessage(devices)}` : "";
+const peopleListMessage = (people, peopleList) =>
+    `${manyPeopleCountMessage(people)}: ${peopleList.join(", ")}`;
 
-  // TODO: extract pluralization logic
-  const units = data.headcount % 10
-  const [verb, noun] = units >= 2 && units <= 4
-    ? ['są', 'osoby']
-    : ['jest', 'osób']
+const userMention = user => `<@${user}>`;
+const core_message = data =>
+{
+    const { headcount, users, unknown_devices } = data;
 
-  return `${mention}, w spejsie ${verb} ${data.headcount} ${noun}:` +
-    ` ${data.users.join(', ')} oraz ${data.unknown_devices} anonimowych urządzeń.`
-}
+    return headcount 
+    ? `w spejsie ${peopleListMessage(headcount, users)}${andDeviceCountMessage(unknown_devices)}.`
+    : unknown_devices
+        ? `Hackerspace jest oficjalnie pusty, natomiast ${existDeviceCountMessage(unknown_devices)}.`
+        : "Hackerspace jest totalnie pusty.";
+};
+
+const formatStatus = (data, user) => `${userMention(user)}, ${core_message(data)}`;
 
 const getWhois = async user => {
-  const data = (await axios.get('https://whois.at.hs3.pl/api/now')).data
-  return formatStatus(data, user)
+    const { data } = (await axios.get('https://whois.at.hs3.pl/api/now'))
+    return formatStatus(data, user)
 }
 
 module.exports = {
-  getWhois,
-  formatStatus,
+    getWhois,
+    formatStatus,
 }
