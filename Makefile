@@ -14,7 +14,7 @@ test: node_modules lint unit
 report: node_modules unit-coverage open-coverage-report
 
 docker:
-	docker -t spotty-kiwi -f ./Dockerfile . 
+	docker build -t spotty-kiwi -f ./Dockerfile . 
 
 
 .PHONY: lint unit spin-up-development-server open-coverage-report unit-coverage
