@@ -1,0 +1,7 @@
+*
+
+!check-prerequisites
+!Makefile
+!package.json
+!yarn.lock
+!src
