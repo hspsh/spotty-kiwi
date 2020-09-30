@@ -21,7 +21,7 @@ const core_message = data =>
 {
     const { headcount, users, unknown_devices } = data;
 
-    return headcount 
+    return headcount
     ? `w spejsie ${peopleListMessage(headcount, users)}${andDeviceCountMessage(unknown_devices)}.`
     : unknown_devices
         ? `Hackerspace jest oficjalnie pusty, natomiast ${existDeviceCountMessage(unknown_devices)}.`
@@ -31,7 +31,7 @@ const core_message = data =>
 const formatStatus = (data, user) => `${userMention(user)}, ${core_message(data)}`;
 
 const getWhois = async user => {
-    const { data } = (await axios.get('https://whois.at.hs3.pl/api/now'))
+    const { data } = (await axios.get('https://whois.at.hsp.sh/api/now'))
     return formatStatus(data, user)
 }
 
