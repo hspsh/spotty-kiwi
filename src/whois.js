@@ -31,7 +31,7 @@ const core_message = data =>
 const formatStatus = (data, user) => `${userMention(user)}, ${core_message(data)}`;
 
 const getWhois = async user => {
-    const { data } = (await axios.get('https://whois.at.hsp.sh/api/now'))
+    const { data } = (await axios.get(`https://${process.env.API_BASE_URL}/api/now`))
     return formatStatus(data, user)
 }
 
