@@ -1,6 +1,6 @@
 {
   "name": "spotty-kiwi",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Hackerspace Pomorze Discord bot",
   "main": "index.js",
   "repository": "git@github.com:hspsh/spotty-kiwi.git",
