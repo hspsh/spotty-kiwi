@@ -1,16 +1,16 @@
 import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
-import config from '../config'
+import config from './config'
 import commands from './commands'
 
 export const refreshCommands = async () : Promise<void> => {
-    const client = new REST({ version: '9' }).setToken(config.BOT_TOKEN)
+    const client = new REST({ version: '9' }).setToken(config.env.BOT_TOKEN)
 
     try {
         console.log('Refreshing slash commands')
 
         await client.put(
-            Routes.applicationGuildCommands(config.APPLICATION_ID, config.GUILD_ID),
+            Routes.applicationGuildCommands(config.env.APPLICATION_ID, config.env.GUILD_ID),
             { body: commands.map(({ name, description }) => ({ name, description })) }
         )
 
@@ -42,5 +42,5 @@ export const run = () : void => {
         }
     })
 
-    client.login(config.BOT_TOKEN)
+    client.login(config.env.BOT_TOKEN)
 }

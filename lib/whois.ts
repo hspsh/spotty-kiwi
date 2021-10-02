@@ -1,5 +1,5 @@
 import axios from 'axios'
-import config from '../config'
+import config from './config'
 
 import { polishPlurals } from 'polish-plurals'
 
@@ -11,7 +11,7 @@ const devicePlural = pluralize('urządzenie', 'urządzenia', 'urządzeń')
 const anonymousPlural = pluralize('anonimowe', 'anonimowe', 'anonimowych')
 
 const getWhois = async () : Promise<string> => {
-    const { data } = (await axios.get(`${config.WHOIS_API}/now`))
+    const { data } = (await axios.get(`${config.env.WHOIS_API}/now`))
     const { headcount, users, unknown_devices: unknownDevices } = data
 
     if (headcount > 0) {
