@@ -1,4 +1,3 @@
-import { refreshCommands, run } from './lib/core'
+import { run } from './lib/core'
 
-refreshCommands()
 run()

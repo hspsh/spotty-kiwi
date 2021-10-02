@@ -6,7 +6,8 @@
   "repository": "git@github.com:hspsh/spotty-kiwi.git",
   "license": "GPL-3.0",
   "scripts": {
-    "dev": "nodemon -r dotenv/config index.ts"
+    "dev": "nodemon -r dotenv/config index.ts",
+    "refreshCommands": "ts-node -r dotenv/config scripts/refreshCommands.ts"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.29.1",
