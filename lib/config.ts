@@ -21,11 +21,11 @@ const loadEnvs = (names: string[]): Config  => {
         if (value === '' || typeof value === 'undefined') {
             missingEnvs.push(name)
         } else {
-            config.env[name] == value
+            config.env[name] = value
         }
     }
 
-    if (missingEnvs.length >= 0) {
+    if (missingEnvs.length > 0) {
         console.log(`Missing variables: ${missingEnvs.join(', ')}`)
         process.exit(1)
     }
