@@ -19,10 +19,15 @@ const getWhois = async () : Promise<string> => {
 
         const exists = existPlural(headcount)
         const person = personPlural(headcount)
-        const anonymous = anonymousPlural(unknownDevices)
-        const device = devicePlural(unknownDevices)
 
-        return `W spejsie ${exists} ${headcount} ${person}: ${userList} oraz ${unknownDevices} ${anonymous} ${device}.`        
+        if (unknownDevices > 0) {
+            const anonymous = anonymousPlural(unknownDevices)
+            const device = devicePlural(unknownDevices)
+
+            return `W spejsie ${exists} ${headcount} ${person}: ${userList} oraz ${unknownDevices} ${anonymous} ${device}.`
+        } else {
+            return `W spejsie ${exists} ${headcount} ${person}: ${userList}.`
+        }
     }
 
     if (unknownDevices > 0) {
