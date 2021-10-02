@@ -1,3 +1,5 @@
+import logger from './logger'
+
 const requiredEnvs = [
     'BOT_TOKEN',
     'APPLICATION_ID',
@@ -26,7 +28,7 @@ const loadEnvs = (names: string[]): Config  => {
     }
 
     if (missingEnvs.length > 0) {
-        console.log(`Missing variables: ${missingEnvs.join(', ')}`)
+        logger.error(`Missing variables: ${missingEnvs.join(', ')}`)
         process.exit(1)
     }
 
