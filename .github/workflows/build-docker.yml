@@ -9,7 +9,8 @@ jobs:
         with:
           node-version: '16'
       - run: docker build . -t hspsh/spotty-kiwi
-      - run: echo "::set-output name=TAG::$(git describe --tags)"
+      - run: echo "::set-output name=TAG::$(git describe --tags 2>/dev/null)"
+        name: Check if commit is tagged
         id: check-tag
       - if: ${{ steps.check-tag.outputs.TAG != '' }}
         uses: docker/login-action@v1
@@ -18,6 +19,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - if: ${{ steps.check-tag.outputs.TAG != '' }}
+        name: Push image
         run: |
           TAG=${{ steps.check-tag.outputs.TAG }}
           docker tag hspsh/spotty-kiwi ghcr.io/hspsh/spotty-kiwi:$TAG
