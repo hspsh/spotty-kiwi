@@ -11,14 +11,14 @@ const commands : Command[] = [{
     }
 }] 
 
+const MATCH_STRINGS = [
+    'kto jest',
+    'jest ktoś'
+]
+
 const messageHandlers: MessageHanlder[] = [{
     predicate: async (msg: Message) => {
-        const substrings = [
-            'kto jest',
-            'jest ktoś'
-        ]
-
-        return substrings.some(substring => msg.content.toLowerCase().includes(substring))
+        return MATCH_STRINGS.some(s => msg.content.toLowerCase().includes(s))
     },
     action: async (msg: Message) => {
         await msg.reply(await whois())
