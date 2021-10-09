@@ -13,16 +13,15 @@ const commands : Command[] = [{
 
 const messageHandlers: MessageHanlder[] = [{
     predicate: async (msg: Message) => {
-        if (msg.content.includes('kto jest')) {
-            return true
-        } else {
-            return false
-        }
+        const substrings = [
+            'kto jest',
+            'jest ktoś'
+        ]
+
+        return substrings.some(substring => msg.content.toLowerCase().includes(substring))
     },
     action: async (msg: Message) => {
-        await msg.reply({
-            content: "ktoś pewnie",
-        })
+        await msg.reply(await whois())
     }
 }]
 
