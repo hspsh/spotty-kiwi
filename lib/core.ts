@@ -21,11 +21,19 @@ export const run = () : void => {
             return
         }
 
+        const logContext = {
+            commandName: interaction.commandName,
+            user: `${interaction.user.username}#${interaction.user.discriminator}`,
+            userId: interaction.user.id,
+            options: interaction.command?.options
+        }
+
+        logger.info('Handling command.', logContext)
+
         try {
             let handled = false
             for (const command of pluginManager.commands) {
                 if (command.name == interaction.commandName) {
-                    logger.info(`Handling command: ${command.name}`)
                     command.handle(interaction)
                     handled = true
                     break
@@ -33,19 +41,30 @@ export const run = () : void => {
             }
 
             if (!handled) {
-                logger.warn(`No handler found for ${interaction.commandName}.`)
+                logger.warn('No handler found.', logContext)
             }
-        } catch (e) {
-            logger.error(`An error occurred: ${e}`)
+        } catch (error) {
+            logger.error('An error occurred.', logContext, { error })
         }
     })
 
     client.on('messageCreate', async interaction => {
-        for (const handler of pluginManager.messageHandlers) {
-            if (await handler.predicate(interaction)) {
-                handler.action(interaction)
-                break
+        const logContext = {
+            messageContent: interaction.content,
+            user: `${interaction.author.username}#${interaction.author.discriminator}`,
+            userId: interaction.author.id,
+        }
+
+        try {
+            for (const handler of pluginManager.messageHandlers) {
+                if (await handler.predicate(interaction)) {
+                    logger.info('Handling message.', logContext)
+                    handler.action(interaction)
+                    break
+                }
             }
+        } catch (error) {
+            logger.error('An error occured while handling the message.', logContext, { error })
         }
     })
 
