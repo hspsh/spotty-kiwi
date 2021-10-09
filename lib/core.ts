@@ -2,7 +2,7 @@ import config from './config'
 import logger from './logger'
 
 
-import { Client, Intents, Message } from 'discord.js'
+import { Client, Intents } from 'discord.js'
 import PluginManager from './plugins/pluginManager'
 
 export const run = () : void => {

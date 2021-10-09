@@ -32,7 +32,7 @@ export default class PluginManager {
 
     }
 
-    public async loadPlugins() {
+    public async loadPlugins() : Promise<void> {
         for (const path of await readdir(__dirname)) {
             const fullPath =  `${__dirname}/${path}`
             const stat = await lstat(fullPath)
@@ -55,7 +55,7 @@ export default class PluginManager {
         }
     }
 
-    public async refreshCommands() {
+    public async refreshCommands() : Promise<void> {
         const client = new REST({ version: '9' }).setToken(config.env.BOT_TOKEN)
 
         try {
