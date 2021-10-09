@@ -1,3 +1,7 @@
-import { refreshCommands } from '../lib/commands'
+import PluginManager from '../lib/plugins/pluginManager'
 
-refreshCommands()
+(async () => {
+    const manager = new PluginManager()
+    await manager.loadPlugins()
+    await manager.refreshCommands()
+})()
