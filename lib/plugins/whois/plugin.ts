@@ -1,4 +1,4 @@
-import { CommandInteraction, Message } from 'discord.js'
+import { CommandInteraction, Message, TextChannel } from 'discord.js'
 
 import { Plugin, Command, MessageHanlder } from '../pluginManager'
 import whois from './api'
@@ -16,9 +16,16 @@ const MATCH_STRINGS = [
     'jest ktoś'
 ]
 
+const WATCHED_CHANNELS = [
+    'drzwi'
+]
+
 const messageHandlers: MessageHanlder[] = [{
     predicate: async (msg: Message) => {
-        return MATCH_STRINGS.some(s => msg.content.toLowerCase().includes(s))
+        return (
+            WATCHED_CHANNELS.some(channel => (msg.channel as TextChannel).name == channel) &&
+            MATCH_STRINGS.some(s => msg.content.toLowerCase().includes(s))
+        )
     },
     action: async (msg: Message) => {
         await msg.reply(await whois())
