@@ -1,0 +1,16 @@
+name: Lint and format sources
+on: push
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: yarn
+        name: Install dependencies
+      - run: yarn eslint --max-warnings=0 '**/*.ts'
+        name: Lint sources
+      - run: yarn prettier --check '**/*.ts'
+        name: Format sources
