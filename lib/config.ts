@@ -1,19 +1,14 @@
 import logger from './logger'
 
-const requiredEnvs = [
-    'BOT_TOKEN',
-    'APPLICATION_ID',
-    'GUILD_ID',
-    'WHOIS_API',
-]
+const requiredEnvs = ['BOT_TOKEN', 'APPLICATION_ID', 'GUILD_ID', 'WHOIS_API']
 
 type Config = {
     env: {
-        [key: string] : string
+        [key: string]: string
     }
 }
 
-const loadEnvs = (names: string[]): Config  => {
+const loadEnvs = (names: string[]): Config => {
     const config: Config = { env: {} }
     const missingEnvs = []
 
