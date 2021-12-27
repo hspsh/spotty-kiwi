@@ -20,7 +20,7 @@ export const run = () : void => {
     })
 
     client.on('messageCreate', async (interaction: Message) => {
-       pluginManager.handleMessage(interaction) 
+        pluginManager.handleMessage(interaction) 
     })
 
     client.login(config.env.BOT_TOKEN)

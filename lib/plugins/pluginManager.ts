@@ -67,11 +67,11 @@ export default class PluginManager {
         const foundMatchingCommand = 
             this.plugins
                 .flatMap(plugin => plugin.commands)
-                .find(command => command.name == interaction.commandName);
+                .find(command => command.name == interaction.commandName)
         
         if(!foundMatchingCommand){
-            logger.warn('No handler found.', logContext);
-            return;
+            logger.warn('No handler found.', logContext)
+            return
         }
         
         try {
@@ -92,10 +92,10 @@ export default class PluginManager {
         const messageHandler = 
             this.plugins
                 .flatMap(plugin => plugin.messageHandlers)
-                .find(handler => handler.predicate(interaction));
+                .find(handler => handler.predicate(interaction))
        
         if(!messageHandler){
-            return;
+            return
         }
 
         logger.info('Handling message.', logContext)
