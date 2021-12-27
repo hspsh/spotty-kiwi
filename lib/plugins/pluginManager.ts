@@ -1,5 +1,3 @@
-import { lstat, readdir } from 'fs/promises'
-
 import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
 import { CommandInteraction, Interaction, Message } from 'discord.js'
@@ -56,7 +54,7 @@ export default class PluginManager {
         }
     }
 
-    public async handleInteraction(interaction: Interaction) {
+    public async handleInteraction(interaction: Interaction): Promise<void> {
         if (!interaction.isCommand()) {
             return
         }
@@ -87,7 +85,7 @@ export default class PluginManager {
         }
     }
 
-    public async handleMessage(interaction: Message) {
+    public async handleMessage(interaction: Message): Promise<void> {
         const logContext = {
             messageContent: interaction.content,
             user: `${interaction.author.username}#${interaction.author.discriminator}`,
