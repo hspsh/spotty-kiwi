@@ -1,26 +1,31 @@
 import config from './config'
 import logger from './logger'
 
-
 import { Client, Intents, Interaction, Message } from 'discord.js'
 import PluginManager from './plugins/pluginManager'
 
-export const run = () : void => {
+export const run = (): void => {
     logger.info('Starting...')
 
-    const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_MESSAGES] })
+    const client = new Client({
+        intents: [
+            Intents.FLAGS.GUILDS,
+            Intents.FLAGS.DIRECT_MESSAGES,
+            Intents.FLAGS.GUILD_MESSAGES,
+        ],
+    })
     const pluginManager = PluginManager.create()
 
     client.on('ready', () => {
         logger.info('Bot is ready.')
     })
 
-    client.on('interactionCreate', async (interaction : Interaction) => {
+    client.on('interactionCreate', async (interaction: Interaction) => {
         pluginManager.handleInteraction(interaction)
     })
 
     client.on('messageCreate', async (interaction: Message) => {
-        pluginManager.handleMessage(interaction) 
+        pluginManager.handleMessage(interaction)
     })
 
     client.login(config.env.BOT_TOKEN)

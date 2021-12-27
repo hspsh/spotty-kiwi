@@ -3,15 +3,16 @@ import config from '../../config'
 
 import { polishPlurals } from 'polish-plurals'
 
-const pluralize = (a: string, b: string, c: string) => (x: number) => polishPlurals(a, b, c, x)
+const pluralize = (a: string, b: string, c: string) => (x: number) =>
+    polishPlurals(a, b, c, x)
 
 const personPlural = pluralize('osoba', 'osoby', 'osób')
 const existPlural = pluralize('jest', 'są', 'jest')
 const devicePlural = pluralize('urządzenie', 'urządzenia', 'urządzeń')
 const anonymousPlural = pluralize('anonimowe', 'anonimowe', 'anonimowych')
 
-const getWhois = async () : Promise<string> => {
-    const { data } = (await axios.get(`${config.env.WHOIS_API}/now`))
+const getWhois = async (): Promise<string> => {
+    const { data } = await axios.get(`${config.env.WHOIS_API}/now`)
     const { headcount, users, unknown_devices: unknownDevices } = data
 
     if (headcount > 0) {
