@@ -10,7 +10,7 @@ jobs:
           node-version: '16'
       - run: yarn
         name: Install dependencies
-      - run: yarn eslint '**/*.ts'
+      - run: yarn eslint --max-warnings=0 '**/*.ts'
         name: Lint sources
-      - run: yarn prettier '**/*.ts' --check
+      - run: yarn prettier --check '**/*.ts'
         name: Format sources

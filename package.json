@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "nodemon -r dotenv/config index.ts",
     "refreshCommands": "bin/run_script.sh refreshCommands",
-    "lint": "eslint --fix '**/*.ts'",
+    "lint": "eslint --fix --max-warnings=0 '**/*.ts'",
     "style": "prettier --write '**/*.ts'"
   },
   "devDependencies": {
