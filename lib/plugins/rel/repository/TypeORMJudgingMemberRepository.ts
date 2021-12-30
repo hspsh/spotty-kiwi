@@ -1,6 +1,6 @@
-import { EntityManager } from 'typeorm'
-import { JudgingMember } from './JudgingMember'
-import { JudgingMemberRepository } from './JudgingMemberRepository'
+import { EntityManager } from "typeorm"
+import { JudgingMember } from "../domain/JudgingMember"
+import { JudgingMemberRepository } from "./JudgingMemberRepository"
 
 export class TypeORMJudgingMemberRepository implements JudgingMemberRepository {
     constructor(public manager: EntityManager) {}

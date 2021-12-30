@@ -1,9 +1,9 @@
 import { beforeEach, afterEach, describe, expect, it } from '@jest/globals'
 import fs from "fs"
 import { createConnection, Connection } from 'typeorm'
-import { JudgedMember } from './JudgedMember'
-import { JudgementCategory } from './JudgementCategory'
-import { JudgingMember } from './JudgingMember'
+import { JudgedMember } from '../domain/JudgedMember'
+import { JudgementCategory } from '../domain/JudgementCategory'
+import { JudgingMember } from '../domain/JudgingMember'
 import { JudgingMemberRepository } from './JudgingMemberRepository'
 import { TypeORMJudgingMemberRepository } from './TypeORMJudgingMemberRepository'
 
