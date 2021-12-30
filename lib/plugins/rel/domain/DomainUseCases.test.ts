@@ -1,5 +1,4 @@
 import { beforeEach, describe, expect, it } from '@jest/globals'
-import { JudgementCategory } from './JudgementCategory'
 import { JudgingMember } from './JudgingMember'
 
 describe('given empty judging user', () => {

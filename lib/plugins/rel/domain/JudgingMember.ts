@@ -10,11 +10,14 @@ export class JudgingMember {
     @PrimaryColumn()
     userId: string
 
-    @OneToMany(() => JudgementCategory, (category) => category.judgingMember, {cascade: true, eager: true})
+    @OneToMany(() => JudgementCategory, (category) => category.judgingMember, {
+        cascade: true,
+        eager: true,
+    })
     judgementCategories?: JudgementCategory[]
 
-    judge(judgedUserId: string, category: string, points: number) {
-        if(!this.judgementCategories){
+    judge(judgedUserId: string, category: string, points: number): void {
+        if (!this.judgementCategories) {
             this.judgementCategories = []
         }
 
@@ -30,7 +33,7 @@ export class JudgingMember {
         judgementCategory.judge(judgedUserId, points)
     }
 
-    static create(userId: string) {
+    static create(userId: string): JudgingMember {
         return new JudgingMember(userId)
     }
 }

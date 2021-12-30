@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+    Column,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm'
 import './JudgedMember'
 import { JudgedMember } from './JudgedMember'
 import { JudgingMember } from './JudgingMember'
@@ -19,11 +25,14 @@ export class JudgementCategory {
     @Column()
     category: string
 
-    @OneToMany(() => JudgedMember, (member) => member.judgementCategory, {cascade: true, eager: true})
+    @OneToMany(() => JudgedMember, (member) => member.judgementCategory, {
+        cascade: true,
+        eager: true,
+    })
     judgedMembers?: JudgedMember[]
 
-    judge(userId: string, points: number) {
-        if(!this.judgedMembers){
+    judge(userId: string, points: number): void {
+        if (!this.judgedMembers) {
             this.judgedMembers = []
         }
 
@@ -39,7 +48,10 @@ export class JudgementCategory {
         foundMember.addPoints(points)
     }
 
-    static create(category: string, judgingMember: JudgingMember) {
+    static create(
+        category: string,
+        judgingMember: JudgingMember
+    ): JudgementCategory {
         return new JudgementCategory(category, judgingMember)
     }
 }

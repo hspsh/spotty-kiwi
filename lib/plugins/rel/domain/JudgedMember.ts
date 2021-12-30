@@ -25,11 +25,14 @@ export class JudgedMember {
     @ManyToOne(() => JudgementCategory, (category) => category.judgingMember)
     judgementCategory: JudgementCategory
 
-    addPoints(amount: number) {
+    addPoints(amount: number): void {
         this.points += amount
     }
 
-    static createMember(userId: string, judgementCategory: JudgementCategory) {
+    static createMember(
+        userId: string,
+        judgementCategory: JudgementCategory
+    ): JudgedMember {
         return new JudgedMember(userId, 0, judgementCategory)
     }
 }

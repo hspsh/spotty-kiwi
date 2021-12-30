@@ -1,5 +1,5 @@
 import { beforeEach, afterEach, describe, expect, it } from '@jest/globals'
-import fs from "fs"
+import fs from 'fs'
 import { createConnection, Connection } from 'typeorm'
 import { JudgedMember } from '../domain/JudgedMember'
 import { JudgementCategory } from '../domain/JudgementCategory'
@@ -15,7 +15,7 @@ describe('given connection', () => {
             type: 'sqlite',
             database: './test.db',
             entities: [JudgedMember, JudgementCategory, JudgingMember],
-            logging: ["log"]
+            logging: ['log'],
         })
         await connection.synchronize()
     })
@@ -23,10 +23,10 @@ describe('given connection', () => {
     afterEach(async () => {
         await connection.dropDatabase()
         await connection.close()
-        await fs.promises.rm("test.db") 
+        await fs.promises.rm('test.db')
     })
 
-    it('smoke test', () => {})
+    it('smoke test', () => undefined)
 
     describe('given JudgingMemberRepository', () => {
         let judgingRepository: JudgingMemberRepository
