@@ -30,7 +30,9 @@
     "discord.js": "^13.1.0",
     "jest": "^27.4.5",
     "polish-plurals": "^1.1.0",
+    "sqlite3": "^5.0.2",
     "ts-jest": "^27.1.2",
+    "typeorm": "^0.2.41",
     "winston": "^3.3.3"
   }
 }
