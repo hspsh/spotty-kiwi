@@ -33,6 +33,18 @@ export class JudgingMember {
         judgementCategory.judge(judgedUserId, points)
     }
 
+    findCategory(category: string): JudgementCategory {
+        const foundCategory = this.judgementCategories?.find(
+            (judgementCategory) => judgementCategory.category === category
+        )
+
+        if (!foundCategory) {
+            throw new Error('No such category for given user')
+        }
+
+        return foundCategory
+    }
+
     static create(userId: string): JudgingMember {
         return new JudgingMember(userId)
     }

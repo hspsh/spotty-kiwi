@@ -4,22 +4,32 @@ import { JudgingMemberRepository } from '../repository/JudgingMemberRepository'
 export class JudgementService {
     constructor(public repository: JudgingMemberRepository) {}
 
-    async judge(judgement: JudgementDTO): Promise<void> {
-        let judgingMember = await this.repository.findById(
-            judgement.judgingUserID
+    async judge(input: JudgementDTO): Promise<void> {
+        let judgingMember = await this.repository.findById(input.judgingUserID)
+
+        if (!judgingMember) {
+            judgingMember = new JudgingMember(input.judgingUserID)
+        }
+
+        judgingMember.judge(input.judgingUserID, input.category, input.points)
+
+        await this.repository.save(judgingMember)
+    }
+
+    async retrieveJudgementPoints(
+        input: RetrieveJudgementDTO
+    ): Promise<number> {
+        const judgingMember = await this.repository.findById(
+            input.judgingUserID
         )
 
         if (!judgingMember) {
-            judgingMember = new JudgingMember(judgement.judgingUserID)
+            throw new Error('No such judging member')
         }
 
-        judgingMember.judge(
-            judgement.judgingUserID,
-            judgement.category,
-            judgement.points
-        )
-
-        await this.repository.save(judgingMember)
+        return judgingMember
+            .findCategory(input.category)
+            .findMember(input.judgedUserID).points
     }
 }
 
@@ -28,4 +38,10 @@ export interface JudgementDTO {
     category: string
     judgedUserID: string
     points: number
+}
+
+export interface RetrieveJudgementDTO {
+    judgingUserID: string
+    category: string
+    judgedUserID: string
 }

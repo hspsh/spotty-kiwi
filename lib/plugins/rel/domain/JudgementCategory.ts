@@ -48,6 +48,18 @@ export class JudgementCategory {
         foundMember.addPoints(points)
     }
 
+    findMember(userId: string): JudgedMember {
+        const foundMember = this.judgedMembers?.find(
+            (judgedMember) => judgedMember.userId === userId
+        )
+
+        if (!foundMember) {
+            throw new Error('There is no member for given userId')
+        }
+
+        return foundMember
+    }
+
     static create(
         category: string,
         judgingMember: JudgingMember
