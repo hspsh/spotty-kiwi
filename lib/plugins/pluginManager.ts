@@ -6,7 +6,7 @@ import logger from '../logger'
 import config from '../config'
 
 import whoisPlugin from './whois/plugin'
-import { PluginFactory as JudgementPluginFactory } from './rel/plugoin'
+import { PluginFactory as JudgementPluginFactory } from './rel/plugin'
 
 export type Command = {
     name: string
@@ -118,7 +118,9 @@ export default class PluginManager {
     static async create(): Promise<PluginManager> {
         return new PluginManager([
             whoisPlugin,
-            await new JudgementPluginFactory().createPlugin("/var/db/sqlite.db")
+            await new JudgementPluginFactory().createPlugin(
+                '/var/db/sqlite.db'
+            ),
         ])
     }
 }
