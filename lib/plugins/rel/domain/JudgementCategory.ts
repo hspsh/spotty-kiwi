@@ -1,30 +1,45 @@
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import './JudgedMember'
 import { JudgedMember } from './JudgedMember'
+import { JudgingMember } from './JudgingMember'
 
+@Entity()
 export class JudgementCategory {
-    constructor(category: string, judgedMembers: JudgedMember[]) {
+    constructor(category: string, judgingMember: JudgingMember) {
         this.category = category
-        this.judgedMembers = judgedMembers
+        this.judgingMember = judgingMember
     }
 
+    @PrimaryGeneratedColumn()
+    id?: number
+
+    @ManyToOne(() => JudgingMember, (member) => member.judgementCategories)
+    judgingMember: JudgingMember
+
+    @Column()
     category: string
 
-    judgedMembers: JudgedMember[]
+    @OneToMany(() => JudgedMember, (member) => member.judgementCategory, {cascade: true, eager: true})
+    judgedMembers?: JudgedMember[]
 
     judge(userId: string, points: number) {
+        if(!this.judgedMembers){
+            this.judgedMembers = []
+        }
+
         let foundMember = this.judgedMembers.find(
             (member) => member.userId === userId
         )
 
         if (!foundMember) {
-            foundMember = JudgedMember.createMember(userId)
+            foundMember = JudgedMember.createMember(userId, this)
             this.judgedMembers.push(foundMember)
         }
 
         foundMember.addPoints(points)
     }
 
-    static create(category: string) {
-        return new JudgementCategory(category, [])
+    static create(category: string, judgingMember: JudgingMember) {
+        return new JudgementCategory(category, judgingMember)
     }
 }

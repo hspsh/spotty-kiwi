@@ -12,7 +12,6 @@ describe('given empty judging user', () => {
     it('when user is judged then all is created', () => {
         emptyJudgingMember.judge('Kokoszka', 'cringe', 42)
 
-        emptyJudgingMember.judgementCategories[0].judgedMembers
         expect(emptyJudgingMember).toEqual(
             expect.objectContaining({
                 userId: 'deadbeef',

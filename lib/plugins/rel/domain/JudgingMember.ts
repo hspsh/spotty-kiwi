@@ -1,23 +1,29 @@
-import './JudgedMember'
+import { Entity, OneToMany, PrimaryColumn } from 'typeorm'
 import { JudgementCategory } from './JudgementCategory'
 
+@Entity()
 export class JudgingMember {
-    constructor(userId: string, judgementCategories: JudgementCategory[]) {
+    constructor(userId: string) {
         this.userId = userId
-        this.judgementCategories = judgementCategories
     }
 
+    @PrimaryColumn()
     userId: string
 
-    judgementCategories: JudgementCategory[]
+    @OneToMany(() => JudgementCategory, (category) => category.judgingMember, {cascade: true, eager: true})
+    judgementCategories?: JudgementCategory[]
 
     judge(judgedUserId: string, category: string, points: number) {
+        if(!this.judgementCategories){
+            this.judgementCategories = []
+        }
+
         let judgementCategory = this.judgementCategories.find(
             (judgementCategory) => judgementCategory.category === category
         )
 
         if (!judgementCategory) {
-            judgementCategory = JudgementCategory.create(category)
+            judgementCategory = JudgementCategory.create(category, this)
             this.judgementCategories.push(judgementCategory)
         }
 
@@ -25,6 +31,6 @@ export class JudgingMember {
     }
 
     static create(userId: string) {
-        return new JudgingMember(userId, [])
+        return new JudgingMember(userId)
     }
 }
