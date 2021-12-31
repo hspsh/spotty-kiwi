@@ -1,7 +1,7 @@
 import { JudgingMember } from '../domain/JudgingMember'
 import { JudgingMemberRepository } from '../repository/JudgingMemberRepository'
 
-export class JudgementService {
+export class JudgementServiceImpl implements JudgementService {
     constructor(public repository: JudgingMemberRepository) {}
 
     async judge(input: JudgementDTO): Promise<void> {
@@ -31,6 +31,11 @@ export class JudgementService {
             .findCategory(input.category)
             .findMember(input.judgedUserID).points
     }
+}
+
+export interface JudgementService {
+    judge(input: JudgementDTO): Promise<void>
+    retrieveJudgementPoints(input: RetrieveJudgementDTO): Promise<number>
 }
 
 export interface JudgementDTO {

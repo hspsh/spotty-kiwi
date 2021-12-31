@@ -5,7 +5,7 @@ import { DiscordController } from './controller/DiscordController'
 import { JudgedMember } from './domain/JudgedMember'
 import { JudgementCategory } from './domain/JudgementCategory'
 import { JudgingMember } from './domain/JudgingMember'
-import { JudgementService } from './service/JudgementService'
+import { JudgementServiceImpl } from './service/JudgementService'
 import { TypeORMJudgingMemberRepository } from './repository/TypeORMJudgingMemberRepository'
 
 import { Plugin } from '../pluginManager'
@@ -15,7 +15,7 @@ export class PluginFactory {
     async createPlugin(dbPath: string): Promise<Plugin> {
         const connection = await this.createConnection(dbPath)
         const controller = new DiscordController(
-            new JudgementService(
+            new JudgementServiceImpl(
                 new TypeORMJudgingMemberRepository(connection.manager)
             )
         )
