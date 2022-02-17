@@ -80,7 +80,7 @@ export default class PluginManager {
 
         try {
             logger.info('Handling message.', logContext)
-            foundMatchingCommand.handle(interaction)
+            await foundMatchingCommand.handle(interaction)
         } catch (error) {
             logger.error('An error occurred.', logContext, { error })
         }
@@ -117,8 +117,8 @@ export default class PluginManager {
 
     static async create(): Promise<PluginManager> {
         return new PluginManager([
-            whoisPlugin,
-            await JudgementPluginFactory.createPlugin('/var/db/sqlite.db'),
+            // whoisPlugin,
+            await JudgementPluginFactory.createPlugin('./sqlite.db'),
         ])
     }
 }

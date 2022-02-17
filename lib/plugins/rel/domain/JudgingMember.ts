@@ -17,6 +17,8 @@ export class JudgingMember {
     judgementCategories?: JudgementCategory[]
 
     judge(judgedUserId: string, category: string, points: number): void {
+        category = category.toLowerCase()
+
         if (!this.judgementCategories) {
             this.judgementCategories = []
         }

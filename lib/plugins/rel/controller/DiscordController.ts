@@ -17,9 +17,12 @@ export class DiscordController {
         const pointsToAdd =
             actionLiteral.length * (actionLiteral[0] === '+' ? 1 : -1)
 
+        const referencedMessage = await message.fetchReference()
+
         const judgeId = message.author.id
-        const judgedId = message.interaction?.user.id || ''
-        const judgedUsername = message.interaction?.user.username || ''
+        const judgeUsername = message.author.username
+        const judgedId = referencedMessage?.author.id || ''
+        const judgedUsername = referencedMessage?.author.username || ''
 
         await this.judgementService.judge({
             judgingUserID: judgeId,
@@ -34,11 +37,17 @@ export class DiscordController {
             category: category,
         })
 
-        await this.respond(message, judgedUsername, points, category)
+        await this.respond(
+            message,
+            judgeUsername,
+            judgedUsername,
+            points,
+            category
+        )
     }
 
     matchesMessage(message: Message): boolean {
-        const isSentAsReply = !!message.interaction
+        const isSentAsReply = !!message.reference
         const matchesJudgementPattern = this.matchJudgementPattern(message)
 
         return isSentAsReply && !!matchesJudgementPattern
@@ -54,11 +63,12 @@ export class DiscordController {
 
     async respond(
         message: Message,
+        judgingUsername: string,
         judgedUsername: string,
         points: number,
         category: string
     ): Promise<void> {
-        const reply = `Członek ${judgedUsername} posiaga ${points} w kategorii ${category}`
+        const reply = `"${judgingUsername}".**${category}**("${judgedUsername}") == ${points}`
         await message.reply(reply)
     }
 
