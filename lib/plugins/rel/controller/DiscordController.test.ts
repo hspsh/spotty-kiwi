@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DiscordController } from './DiscordController'
-import { beforeEach, afterEach, describe, expect, it, jest } from '@jest/globals'
+import {
+    beforeEach,
+    afterEach,
+    describe,
+    expect,
+    it,
+    jest,
+} from '@jest/globals'
 import {
     Message,
     MessageInteraction,
@@ -54,7 +61,7 @@ describe('given DiscordController', () => {
             judgingUserID: 'A',
             category: 'cringe',
             judgedUserID: 'B',
-            points: 1
+            points: 1,
         })
 
         const messageHook = jest.fn(async (_: string) => message)
@@ -84,7 +91,7 @@ describe('given DiscordController', () => {
             judgingUserID: 'A',
             category: 'cringe',
             judgedUserID: 'B',
-            points: 1
+            points: 1,
         })
 
         const messageHook = jest.fn(async (_: string) => message)

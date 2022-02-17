@@ -36,6 +36,8 @@ export class JudgingMember {
     }
 
     findCategory(category: string): JudgementCategory {
+        category = category.toLowerCase()
+
         const foundCategory = this.judgementCategories?.find(
             (judgementCategory) => judgementCategory.category === category
         )

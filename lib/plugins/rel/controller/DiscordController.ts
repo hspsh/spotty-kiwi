@@ -68,7 +68,7 @@ export class DiscordController {
         points: number,
         category: string
     ): Promise<void> {
-        const reply = `"${judgingUsername}".**${category}**("${judgedUsername}") == ${points}`
+        const reply = `"${judgingUsername}".**${category.toLowerCase()}**("${judgedUsername}") == ${points}`
         await message.reply(reply)
     }
 
