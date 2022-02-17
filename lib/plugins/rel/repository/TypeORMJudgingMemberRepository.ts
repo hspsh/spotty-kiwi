@@ -12,4 +12,14 @@ export class TypeORMJudgingMemberRepository implements JudgingMemberRepository {
     save(judgingMember: JudgingMember): Promise<JudgingMember> {
         return this.manager.save(judgingMember)
     }
+
+    async inTransaction<T>(
+        runnable: (
+            inTransactionRepository: JudgingMemberRepository
+        ) => Promise<T>
+    ): Promise<T> {
+        return this.manager.transaction((entityManager) =>
+            runnable(new TypeORMJudgingMemberRepository(entityManager))
+        )
+    }
 }

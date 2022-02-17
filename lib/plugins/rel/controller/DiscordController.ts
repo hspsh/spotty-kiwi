@@ -5,21 +5,21 @@ export class DiscordController {
     constructor(public judgementService: JudgementService) {}
 
     async onMessage(message: Message): Promise<void> {
-        if (!this.matchesMessage(message)) {
+        const matchedJudgementPattern = this.matchJudgementPattern(message)
+
+        if (!matchedJudgementPattern) {
             return
         }
 
         const [, category, actionLiteral]: [string, string, string] =
-            message.content.match(DiscordController.REGEX) as [
-                string,
-                string,
-                string
-            ]
-        const pointsToAdd = actionLiteral.length
+            matchedJudgementPattern
 
-        const judgeId: string = this.extractJudgeId(message)
-        const judgedId: string = this.extractJudgedId(message) || ''
-        const judgedUsername: string = this.extractJudgedUsername(message) || ''
+        const pointsToAdd =
+            actionLiteral.length * (actionLiteral[0] === '+' ? 1 : -1)
+
+        const judgeId = message.author.id
+        const judgedId = message.interaction?.user.id || ''
+        const judgedUsername = message.interaction?.user.username || ''
 
         await this.judgementService.judge({
             judgingUserID: judgeId,
@@ -39,23 +39,17 @@ export class DiscordController {
 
     matchesMessage(message: Message): boolean {
         const isSentAsReply = !!message.interaction
-        const matchesJudgementPattern = !!message?.content?.match(
+        const matchesJudgementPattern = this.matchJudgementPattern(message)
+
+        return isSentAsReply && !!matchesJudgementPattern
+    }
+
+    matchJudgementPattern(message: Message): [string, string, string] | null {
+        const matchesJudgementPattern = message?.content?.match(
             DiscordController.REGEX
         )
 
-        return isSentAsReply && matchesJudgementPattern
-    }
-
-    extractJudgeId(message: Message): string {
-        return message.author.id
-    }
-
-    extractJudgedId(message: Message): string | undefined {
-        return message.interaction?.user.id
-    }
-
-    extractJudgedUsername(message: Message): string | undefined {
-        return message.interaction?.user.username
+        return matchesJudgementPattern as [string, string, string] | null
     }
 
     async respond(

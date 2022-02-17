@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { JudgementCategory } from './JudgementCategory'
 
 @Entity()
-export class JudgedMember {
+export class JudgedMemberForCategory {
     constructor(
         userId: string,
         points: number,
@@ -32,7 +32,7 @@ export class JudgedMember {
     static createMember(
         userId: string,
         judgementCategory: JudgementCategory
-    ): JudgedMember {
-        return new JudgedMember(userId, 0, judgementCategory)
+    ): JudgedMemberForCategory {
+        return new JudgedMemberForCategory(userId, 0, judgementCategory)
     }
 }

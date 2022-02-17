@@ -5,15 +5,21 @@ export class JudgementServiceImpl implements JudgementService {
     constructor(public repository: JudgingMemberRepository) {}
 
     async judge(input: JudgementDTO): Promise<void> {
-        let judgingMember = await this.repository.findById(input.judgingUserID)
+        this.repository.inTransaction(async (repository) => {
+            let judgingMember = await repository.findById(input.judgingUserID)
 
-        if (!judgingMember) {
-            judgingMember = new JudgingMember(input.judgingUserID)
-        }
+            if (!judgingMember) {
+                judgingMember = new JudgingMember(input.judgingUserID)
+            }
 
-        judgingMember.judge(input.judgingUserID, input.category, input.points)
+            judgingMember.judge(
+                input.judgingUserID,
+                input.category,
+                input.points
+            )
 
-        await this.repository.save(judgingMember)
+            await repository.save(judgingMember)
+        })
     }
 
     async retrieveJudgementPoints(

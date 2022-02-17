@@ -5,8 +5,8 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm'
-import './JudgedMember'
-import { JudgedMember } from './JudgedMember'
+import './JudgedMemberForCategory'
+import { JudgedMemberForCategory } from './JudgedMemberForCategory'
 import { JudgingMember } from './JudgingMember'
 
 @Entity()
@@ -25,11 +25,15 @@ export class JudgementCategory {
     @Column()
     category: string
 
-    @OneToMany(() => JudgedMember, (member) => member.judgementCategory, {
-        cascade: true,
-        eager: true,
-    })
-    judgedMembers?: JudgedMember[]
+    @OneToMany(
+        () => JudgedMemberForCategory,
+        (member) => member.judgementCategory,
+        {
+            cascade: true,
+            eager: true,
+        }
+    )
+    judgedMembers?: JudgedMemberForCategory[]
 
     judge(userId: string, points: number): void {
         if (!this.judgedMembers) {
@@ -41,14 +45,14 @@ export class JudgementCategory {
         )
 
         if (!foundMember) {
-            foundMember = JudgedMember.createMember(userId, this)
+            foundMember = JudgedMemberForCategory.createMember(userId, this)
             this.judgedMembers.push(foundMember)
         }
 
         foundMember.addPoints(points)
     }
 
-    findMember(userId: string): JudgedMember {
+    findMember(userId: string): JudgedMemberForCategory {
         const foundMember = this.judgedMembers?.find(
             (judgedMember) => judgedMember.userId === userId
         )
