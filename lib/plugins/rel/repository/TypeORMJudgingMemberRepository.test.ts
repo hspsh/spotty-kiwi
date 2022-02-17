@@ -1,8 +1,7 @@
 import { beforeEach, afterEach, describe, expect, it } from '@jest/globals'
-import { createConnection, Connection } from 'typeorm'
-import { JudgedMemberForCategory } from '../domain/JudgedMemberForCategory'
-import { JudgementCategory } from '../domain/JudgementCategory'
+import { Connection } from 'typeorm'
 import { JudgingMember } from '../domain/JudgingMember'
+import { createTypeORMConnection } from './ConnectionFactoryForTypeORM'
 import { JudgingMemberRepository } from './JudgingMemberRepository'
 import { TypeORMJudgingMemberRepository } from './TypeORMJudgingMemberRepository'
 
@@ -10,21 +9,10 @@ describe('given connection', () => {
     let connection: Connection
 
     beforeEach(async () => {
-        connection = await createConnection({
-            type: 'sqlite',
-            database: ':memory:',
-            entities: [
-                JudgedMemberForCategory,
-                JudgementCategory,
-                JudgingMember,
-            ],
-            logging: ['log'],
-        })
-        await connection.synchronize()
+        connection = await createTypeORMConnection(':memory:')
     })
 
     afterEach(async () => {
-        await connection.dropDatabase()
         await connection.close()
     })
 

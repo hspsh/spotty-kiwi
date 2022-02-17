@@ -24,6 +24,7 @@ import {
     JudgementService,
     JudgementServiceImpl,
 } from '../service/JudgementService'
+import { createTypeORMConnection } from '../repository/ConnectionFactoryForTypeORM'
 
 describe('given DiscordController', () => {
     let connection: Connection
@@ -32,17 +33,7 @@ describe('given DiscordController', () => {
     let judgementService: JudgementService
 
     beforeEach(async () => {
-        connection = await createConnection({
-            type: 'sqlite',
-            database: ':memory:',
-            entities: [
-                JudgedMemberForCategory,
-                JudgementCategory,
-                JudgingMember,
-            ],
-            logging: ['log'],
-        })
-        await connection.synchronize()
+        connection = await createTypeORMConnection(":memory:") 
 
         judgementService = new JudgementServiceImpl(
             new TypeORMJudgingMemberRepository(connection.manager)
@@ -67,7 +58,10 @@ describe('given DiscordController', () => {
         const messageHook = jest.fn(async (_: string) => message)
         const message = {
             content: 'cringe+++',
-            author: { id: 'A' } as User,
+            author: { 
+                id: 'A',
+                username: 'cringebit'
+            } as User,
             fetchReference: async () =>
                 ({
                     author: {
@@ -82,8 +76,10 @@ describe('given DiscordController', () => {
 
         await discordController.onMessage(message)
 
-        expect(messageHook.mock.calls[0][0]).toContain('4')
+        expect(messageHook.mock.calls[0][0]).toContain('cringebit')
         expect(messageHook.mock.calls[0][0]).toContain('cringe')
+        expect(messageHook.mock.calls[0][0]).toContain('4')
+        expect(messageHook.mock.calls[0][0]).toContain('user')
     })
 
     it("given already 1 point on @user cringe when @cringebit sends 'Cringe--' replying to @user then judges him to -1 point (ignoring case) and sends message", async () => {
@@ -97,7 +93,10 @@ describe('given DiscordController', () => {
         const messageHook = jest.fn(async (_: string) => message)
         const message = {
             content: 'Cringe--',
-            author: { id: 'A' } as User,
+            author: { 
+                id: 'A',
+                username: 'cringebit'    
+            } as User,
             fetchReference: async () =>
                 ({
                     author: {
@@ -112,8 +111,10 @@ describe('given DiscordController', () => {
 
         await discordController.onMessage(message)
 
-        expect(messageHook.mock.calls[0][0]).toContain('-1')
+        expect(messageHook.mock.calls[0][0]).toContain('cringebit')
         expect(messageHook.mock.calls[0][0]).toContain('cringe')
+        expect(messageHook.mock.calls[0][0]).toContain('-1')
+        expect(messageHook.mock.calls[0][0]).toContain('user')
     })
 })
 /* eslint-enable */
