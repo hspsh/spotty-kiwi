@@ -1,6 +1,6 @@
 import logger from './logger'
 
-const requiredEnvs = ['BOT_TOKEN', 'APPLICATION_ID', 'GUILD_ID', 'WHOIS_API']
+const requiredEnvs = ['BOT_TOKEN', 'APPLICATION_ID', 'GUILD_ID', 'WHOIS_API', 'REL_DB_PATH']
 
 type Config = {
     env: {
