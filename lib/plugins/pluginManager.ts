@@ -128,7 +128,7 @@ export default class PluginManager {
     static async create(): Promise<PluginManager> {
         return new PluginManager([
             whoisPlugin,
-            await JudgementPluginFactory.createPlugin('./sqlite.db'),
+            await JudgementPluginFactory.createPlugin(config.env.REL_DB_PATH || './sqlite.db'),
         ])
     }
 }
