@@ -58,7 +58,7 @@ export class JudgementCategory {
         )
 
         if (!foundMember) {
-            throw new Error('There is no member for given userId')
+            throw new Error(`There is no member for given userId: ${userId}`)
         }
 
         return foundMember

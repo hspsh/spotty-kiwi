@@ -33,7 +33,7 @@ describe('given DiscordController', () => {
     let judgementService: JudgementService
 
     beforeEach(async () => {
-        connection = await createTypeORMConnection(":memory:") 
+        connection = await createTypeORMConnection(':memory:')
 
         judgementService = new JudgementServiceImpl(
             new TypeORMJudgingMemberRepository(connection.manager)
@@ -58,9 +58,9 @@ describe('given DiscordController', () => {
         const messageHook = jest.fn(async (_: string) => message)
         const message = {
             content: 'cringe+++',
-            author: { 
+            author: {
                 id: 'A',
-                username: 'cringebit'
+                username: 'cringebit',
             } as User,
             fetchReference: async () =>
                 ({
@@ -93,9 +93,9 @@ describe('given DiscordController', () => {
         const messageHook = jest.fn(async (_: string) => message)
         const message = {
             content: 'Cringe--',
-            author: { 
+            author: {
                 id: 'A',
-                username: 'cringebit'    
+                username: 'cringebit',
             } as User,
             fetchReference: async () =>
                 ({

@@ -8,7 +8,7 @@ export class SetUp1645131484141 implements MigrationInterface {
                 columns: [
                     {
                         name: 'userId',
-                        type: 'string',
+                        type: 'varchar',
                         isPrimary: true,
                         length: '64',
                     },
@@ -30,11 +30,11 @@ export class SetUp1645131484141 implements MigrationInterface {
                     },
                     {
                         name: 'category',
-                        type: 'string',
+                        type: 'varchar',
                     },
                     {
                         name: 'judgingMemberUserId',
-                        type: 'string',
+                        type: 'varchar',
                         length: '64',
                     },
                 ],
@@ -45,53 +45,65 @@ export class SetUp1645131484141 implements MigrationInterface {
                         referencedColumnNames: ['userId'],
                     },
                 ],
-                indices: [{
-                    name: "judgingMemberUserIdIndex",
-                    columnNames: ["judgingMemberUserId"]
-                }]
+                indices: [
+                    {
+                        name: 'judgingMemberUserIdIndex',
+                        columnNames: ['judgingMemberUserId'],
+                    },
+                ],
             })
         )
 
         await queryRunner.createTable(
             new Table({
-                name: "judged_member_for_category",
-                columns: [{
-                    name: 'id',
-                    type: 'integer',
-                    isPrimary: true,
-                    isGenerated: true,
-                    generationStrategy: 'increment',
-                    isNullable: false,
-                }, {
-                    name: 'userId',
-                    type: 'string',
-                    length: '64',
-                }, {
-                    name: 'points',
-                    type: 'int'
-                }, {
-                    name: 'judgementCategoryId',
-                    type: 'int'
-                }],
-                foreignKeys: [{
-                    columnNames: ["judgementCategoryId"],
-                    referencedTableName: 'judgement_category',
-                    referencedColumnNames: ['id']
-                }],
-                indices: [{
-                    name: "userIdIndex",
-                    columnNames: ["userId"]
-                },{
-                    name: "judgementCategoryIdIndex",
-                    columnNames: ["judgementCategoryId"]
-                }]
+                name: 'judged_member_for_category',
+                columns: [
+                    {
+                        name: 'id',
+                        type: 'integer',
+                        isPrimary: true,
+                        isGenerated: true,
+                        generationStrategy: 'increment',
+                        isNullable: false,
+                    },
+                    {
+                        name: 'userId',
+                        type: 'varchar',
+                        length: '64',
+                    },
+                    {
+                        name: 'points',
+                        type: 'int',
+                    },
+                    {
+                        name: 'judgementCategoryId',
+                        type: 'int',
+                    },
+                ],
+                foreignKeys: [
+                    {
+                        columnNames: ['judgementCategoryId'],
+                        referencedTableName: 'judgement_category',
+                        referencedColumnNames: ['id'],
+                    },
+                ],
+                indices: [
+                    {
+                        name: 'userIdIndex',
+                        columnNames: ['userId'],
+                    },
+                    {
+                        name: 'judgementCategoryIdIndex',
+                        columnNames: ['judgementCategoryId'],
+                    },
+                ],
             })
         )
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        queryRunner.dropTable("judging_member")
-        queryRunner.dropTable("judgement_category")
-        queryRunner.dropTable("judged_member_for_category")
+        queryRunner.dropTable('judging_member')
+        queryRunner.dropTable('judgement_category')
+        queryRunner.dropTable('judged_member_for_category')
     }
 }

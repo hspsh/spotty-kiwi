@@ -9,7 +9,7 @@ export class JudgementServiceImpl implements JudgementService {
             let judgingMember = await repository.findById(input.judgingUserID)
 
             if (!judgingMember) {
-                judgingMember = new JudgingMember(input.judgingUserID)
+                judgingMember = JudgingMember.create(input.judgingUserID)
             }
 
             judgingMember.judge(

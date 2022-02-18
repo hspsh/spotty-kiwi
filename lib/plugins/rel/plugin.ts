@@ -22,9 +22,9 @@ export const JudgementPluginFactory = {
             messageHandlers: [
                 {
                     action: (msg: Message) => controller.onMessage(msg),
-                    predicate: async (msg) => controller.matchesMessage(msg),
+                    predicate: (msg) => controller.matchesMessage(msg),
                 },
             ],
         }
-    }
+    },
 }

@@ -46,11 +46,11 @@ export class DiscordController {
         )
     }
 
-    matchesMessage(message: Message): boolean {
+    async matchesMessage(message: Message): Promise<boolean> {
         const isSentAsReply = !!message.reference
-        const matchesJudgementPattern = this.matchJudgementPattern(message)
+        const matchesJudgementPattern = !!this.matchJudgementPattern(message)
 
-        return isSentAsReply && !!matchesJudgementPattern
+        return isSentAsReply && matchesJudgementPattern
     }
 
     matchJudgementPattern(message: Message): [string, string, string] | null {

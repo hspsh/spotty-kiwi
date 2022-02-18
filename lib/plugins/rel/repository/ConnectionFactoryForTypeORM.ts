@@ -11,7 +11,7 @@ export async function createTypeORMConnection(
         type: 'sqlite',
         database: forDBPath,
         entities: [JudgedMemberForCategory, JudgementCategory, JudgingMember],
-        logging: ['log'],
+        logging: true,
         migrations: [SetUp1645131484141],
     })
     await connection.runMigrations()
