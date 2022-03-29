@@ -1,4 +1,4 @@
-FROM node:16 AS build
+FROM node:16-alpine AS build
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ WORKDIR /app
 
 COPY bin ./bin
 COPY package.json yarn.lock ./
-RUN yarn install
+RUN yarn install && yarn cache clean
 COPY --from=build /app/build ./
 
 CMD ["node", "./"]

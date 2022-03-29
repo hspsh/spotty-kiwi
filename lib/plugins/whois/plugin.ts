@@ -1,4 +1,4 @@
-import { CommandInteraction, Message, TextChannel } from 'discord.js'
+import { CommandInteraction, GuildMember, Message, TextChannel } from 'discord.js'
 
 import { Plugin, Command, MessageHandler } from '../pluginManager'
 import api from './api'
@@ -10,7 +10,7 @@ const commands: Command[] = [
         handle: async (interaction: CommandInteraction): Promise<void> => {
             await interaction.reply(await api.getWhois())
             await api.reportCringe(
-                interaction.user.username,
+                (interaction.member as GuildMember).displayName,
                 (interaction.channel as TextChannel).name
             )
         },
@@ -34,7 +34,7 @@ const messageHandlers: MessageHandler[] = [
         action: async (msg: Message) => {
             await msg.reply(await api.getWhois())
             await api.reportCringe(
-                msg.author.username,
+                (msg.member as GuildMember).displayName,
                 (msg.channel as TextChannel).name
             )
         },
