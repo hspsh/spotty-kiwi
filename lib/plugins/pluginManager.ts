@@ -6,6 +6,7 @@ import logger from '../logger'
 import config from '../config'
 
 import whoisPlugin from './whois/plugin'
+import { JudgementPluginFactory } from './rel/plugin'
 
 export type Command = {
     name: string
@@ -79,7 +80,7 @@ export default class PluginManager {
 
         try {
             logger.info('Handling message.', logContext)
-            foundMatchingCommand.handle(interaction)
+            await foundMatchingCommand.handle(interaction)
         } catch (error) {
             logger.error('An error occurred.', logContext, { error })
         }
@@ -92,9 +93,19 @@ export default class PluginManager {
             userId: interaction.author.id,
         }
 
-        const messageHandler = this.plugins
-            .flatMap((plugin) => plugin.messageHandlers)
-            .find((handler) => handler.predicate(interaction))
+        const messageHandler = (
+            await Promise.all(
+                this.plugins
+                    .flatMap((plugin) => plugin.messageHandlers)
+                    .map(
+                        async (plugin) =>
+                            [
+                                plugin.action,
+                                await plugin.predicate(interaction),
+                            ] as [(msg: Message) => Promise<void>, boolean]
+                    )
+            )
+        ).find(([, predicateResult]) => predicateResult)?.[0]
 
         if (!messageHandler) {
             return
@@ -104,7 +115,7 @@ export default class PluginManager {
 
         try {
             logger.info('Handling message.', logContext)
-            messageHandler.action(interaction)
+            await messageHandler(interaction)
         } catch (error) {
             logger.error(
                 'An error occured while handling the message.',
@@ -114,7 +125,12 @@ export default class PluginManager {
         }
     }
 
-    static create(): PluginManager {
-        return new PluginManager([whoisPlugin])
+    static async create(): Promise<PluginManager> {
+        return new PluginManager([
+            whoisPlugin,
+            await JudgementPluginFactory.createPlugin(
+                config.env.REL_DB_PATH || './sqlite.db'
+            ),
+        ])
     }
 }

@@ -1,5 +1,5 @@
 import PluginManager from '../lib/plugins/pluginManager'
 ;(async () => {
-    const manager = PluginManager.create()
+    const manager = await PluginManager.create()
     await manager.refreshCommands()
 })()
