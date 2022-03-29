@@ -80,7 +80,6 @@ const getWeightedRandomMessage = (person: string, channel: string): string => {
         .map((message) => message[1])
         .reduce((a, b) => a + b)
     const random = Math.random() * totalWeight
-    console.log(`${random} of ${totalWeight}`)
     let pointer = 0
 
     for (const [message, weight] of messages) {
@@ -90,14 +89,12 @@ const getWeightedRandomMessage = (person: string, channel: string): string => {
         }
     }
 
-    console.log(`pointer: ${pointer}`)
-
     throw new Error('Unreachable')
 }
 
 const reportCringe = async (person: string, channel: string): Promise<void> => {
     const message = getWeightedRandomMessage(person, channel)
-    console.log(message)
+
     await axios.get(
         `https://cringe.at.hsp.sh/mow/${encodeURIComponent(message)}`
     )
