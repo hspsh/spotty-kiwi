@@ -14,7 +14,7 @@ export type Command = {
     handle: (interaction: CommandInteraction) => Promise<void>
 }
 
-export type MessageHanlder = {
+export type MessageHandler = {
     predicate: (message: Message) => Promise<boolean>
     action: (message: Message) => Promise<void>
 }
@@ -22,7 +22,7 @@ export type MessageHanlder = {
 export type Plugin = {
     name: string
     commands: Command[]
-    messageHandlers: MessageHanlder[]
+    messageHandlers: MessageHandler[]
 }
 
 export default class PluginManager {
