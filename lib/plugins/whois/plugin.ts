@@ -1,14 +1,15 @@
 import { CommandInteraction, Message, TextChannel } from 'discord.js'
 
 import { Plugin, Command, MessageHandler } from '../pluginManager'
-import whois from './api'
+import api from './api'
 
 const commands: Command[] = [
     {
         name: 'ktohakuje',
         description: 'Sprawdź kto jest teraz w spejsie',
         handle: async (interaction: CommandInteraction): Promise<void> => {
-            await interaction.reply(await whois())
+            await interaction.reply(await api.getWhois())
+            await api.reportCringe(interaction.user.username, (interaction.channel as TextChannel).name)
         },
     },
 ]
@@ -28,7 +29,8 @@ const messageHandlers: MessageHandler[] = [
             )
         },
         action: async (msg: Message) => {
-            await msg.reply(await whois())
+            await msg.reply(await api.getWhois())
+            await api.reportCringe(msg.author.username, (msg.channel as TextChannel).name)
         },
     },
 ]

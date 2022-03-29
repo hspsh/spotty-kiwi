@@ -42,4 +42,50 @@ const getWhois = async (): Promise<string> => {
     }
 }
 
-export default getWhois
+type MessageGenerator = (person: string, channel: string) => string
+
+const messages: ([MessageGenerator, number])[] = [
+    [(person, channel) => `${person} mówi ding-dong na kanale ${channel}`, 4],
+    [(person, channel) => `${person} robi puk-puk na kanale ${channel}`, 4],
+    [(person, channel) => `${person} robi honk-honk na kanale ${channel}`, 4],
+    [(person, channel) => `${person} robi cringe-cringe na kanale ${channel}`, 2],
+    [(person, channel) => `${person} pyta się czy pijemy`, 2],
+    [(person, channel) => `${person} nie zapłacił składki w tym miesiącu`, 2],
+    [(person, channel) => `${person} dostał kociej mordy`, 2],
+    [(person, channel) => `${person} dedosuje huisa na kanale ${channel}`, 2],
+    [(person, channel) => `${person} woli windowsa od linuxa`, 2],
+    [(person, channel) => `${person} tekst dolny`, 2],
+    [(person, channel) => `${person} szanuje papieża na kanale ${channel}`, 2],
+    [(person, channel) => `${channel} mówi ding-dong na kanale ${person}`, 2],
+    [(person, channel) => `${person}; DROP TABLE HACKERS; DROP TABLE CHANNELS; --`, 4],
+    [(person, channel) => `${person} krindżuje na kanale ${channel}`, 2]
+]
+
+const getWeightedRandomMessage = (person: string, channel: string): string => {
+    const totalWeight = messages.map(message => message[1]).reduce((a, b) => a + b)
+    const random = Math.random() * totalWeight
+    console.log(`${random} of ${totalWeight}`)
+    let pointer = 0
+
+    for (const [message, weight] of messages) {
+        pointer += weight
+        if (random < pointer) {
+            return message(person, channel)
+        }
+    }
+
+    console.log(`pointer: ${pointer}`)
+
+    throw new Error("Unreachable")
+}
+
+const reportCringe = async (person: string, channel: string): Promise<void> => {
+    const message = getWeightedRandomMessage(person, channel)
+    console.log(message)
+    await axios.get(`https://cringe.at.hsp.sh/mow/${encodeURIComponent(message)}`)
+}
+
+export default {
+    getWhois,
+    reportCringe
+}
