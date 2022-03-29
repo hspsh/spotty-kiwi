@@ -58,7 +58,8 @@ const messages: ([MessageGenerator, number])[] = [
     [(person, channel) => `${person} szanuje papieża na kanale ${channel}`, 2],
     [(person, channel) => `${channel} mówi ding-dong na kanale ${person}`, 2],
     [(person, channel) => `${person}; DROP TABLE HACKERS; DROP TABLE CHANNELS; --`, 4],
-    [(person, channel) => `${person} krindżuje na kanale ${channel}`, 2]
+    [(person, channel) => `${person} krindżuje na kanale ${channel}`, 2],
+    [(person, channel) => `${person} mówi ri,i,i,i,i,i,i na kanale ${channel}`, 2],
 ]
 
 const getWeightedRandomMessage = (person: string, channel: string): string => {
