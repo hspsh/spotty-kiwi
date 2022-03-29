@@ -1,6 +1,6 @@
 {
   "name": "spotty-kiwi",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Hackerspace Pomorze Discord bot",
   "main": "index.js",
   "repository": "git@github.com:hspsh/spotty-kiwi.git",
@@ -18,12 +18,12 @@
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
+    "jest": "^27.4.5",
     "nodemon": "^2.0.13",
     "prettier": "^2.5.1",
+    "ts-jest": "^27.1.2",
     "ts-node": "^10.2.0",
-    "typescript": "^4.3.5",
-    "jest": "^27.4.5",
-    "ts-jest": "^27.1.2"
+    "typescript": "^4.3.5"
   },
   "dependencies": {
     "@discordjs/rest": "^0.1.0-canary.0",
