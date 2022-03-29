@@ -9,7 +9,10 @@ const commands: Command[] = [
         description: 'Sprawdź kto jest teraz w spejsie',
         handle: async (interaction: CommandInteraction): Promise<void> => {
             await interaction.reply(await api.getWhois())
-            await api.reportCringe(interaction.user.username, (interaction.channel as TextChannel).name)
+            await api.reportCringe(
+                interaction.user.username,
+                (interaction.channel as TextChannel).name
+            )
         },
     },
 ]
@@ -30,7 +33,10 @@ const messageHandlers: MessageHandler[] = [
         },
         action: async (msg: Message) => {
             await msg.reply(await api.getWhois())
-            await api.reportCringe(msg.author.username, (msg.channel as TextChannel).name)
+            await api.reportCringe(
+                msg.author.username,
+                (msg.channel as TextChannel).name
+            )
         },
     },
 ]

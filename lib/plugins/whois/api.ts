@@ -45,11 +45,15 @@ const getWhois = async (): Promise<string> => {
 type MessageGenerator = (person: string, channel: string) => string
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-const messages: ([MessageGenerator, number])[] = [
+const messages: [MessageGenerator, number][] = [
     [(person, channel) => `${person} mówi ding-dong na kanale ${channel}`, 4],
     [(person, channel) => `${person} robi puk-puk na kanale ${channel}`, 4],
     [(person, channel) => `${person} robi honk-honk na kanale ${channel}`, 4],
-    [(person, channel) => `${person} robi cringe-cringe na kanale ${channel}`, 2],
+    [
+        (person, channel) =>
+            `${person} robi cringe-cringe na kanale ${channel}`,
+        2,
+    ],
     [(person, channel) => `${person} pyta się czy pijemy`, 2],
     [(person, channel) => `${person} nie zapłacił składki w tym miesiącu`, 2],
     [(person, channel) => `${person} dostał kociej mordy`, 2],
@@ -58,13 +62,23 @@ const messages: ([MessageGenerator, number])[] = [
     [(person, channel) => `${person} tekst dolny`, 2],
     [(person, channel) => `${person} szanuje papieża na kanale ${channel}`, 2],
     [(person, channel) => `${channel} mówi ding-dong na kanale ${person}`, 2],
-    [(person, channel) => `${person}; DROP TABLE HACKERS; DROP TABLE CHANNELS; --`, 4],
+    [
+        (person, channel) =>
+            `${person}; DROP TABLE HACKERS; DROP TABLE CHANNELS; --`,
+        4,
+    ],
     [(person, channel) => `${person} krindżuje na kanale ${channel}`, 2],
-    [(person, channel) => `${person} mówi ri,i,i,i,i,i,i na kanale ${channel}`, 2],
+    [
+        (person, channel) =>
+            `${person} mówi ri,i,i,i,i,i,i na kanale ${channel}`,
+        2,
+    ],
 ]
 
 const getWeightedRandomMessage = (person: string, channel: string): string => {
-    const totalWeight = messages.map(message => message[1]).reduce((a, b) => a + b)
+    const totalWeight = messages
+        .map((message) => message[1])
+        .reduce((a, b) => a + b)
     const random = Math.random() * totalWeight
     console.log(`${random} of ${totalWeight}`)
     let pointer = 0
@@ -78,16 +92,18 @@ const getWeightedRandomMessage = (person: string, channel: string): string => {
 
     console.log(`pointer: ${pointer}`)
 
-    throw new Error("Unreachable")
+    throw new Error('Unreachable')
 }
 
 const reportCringe = async (person: string, channel: string): Promise<void> => {
     const message = getWeightedRandomMessage(person, channel)
     console.log(message)
-    await axios.get(`https://cringe.at.hsp.sh/mow/${encodeURIComponent(message)}`)
+    await axios.get(
+        `https://cringe.at.hsp.sh/mow/${encodeURIComponent(message)}`
+    )
 }
 
 export default {
     getWhois,
-    reportCringe
+    reportCringe,
 }
