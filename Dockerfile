@@ -8,7 +8,7 @@ RUN yarn install
 COPY . .
 RUN yarn tsc --outDir build
 
-FROM node:16
+FROM node:16-alpine
 
 ENV NODE_ENV=production
 WORKDIR /app
