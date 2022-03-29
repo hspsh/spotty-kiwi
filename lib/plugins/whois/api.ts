@@ -44,12 +44,13 @@ const getWhois = async (): Promise<string> => {
 
 type MessageGenerator = (person: string, channel: string) => string
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const messages: ([MessageGenerator, number])[] = [
     [(person, channel) => `${person} mówi ding-dong na kanale ${channel}`, 4],
     [(person, channel) => `${person} robi puk-puk na kanale ${channel}`, 4],
     [(person, channel) => `${person} robi honk-honk na kanale ${channel}`, 4],
     [(person, channel) => `${person} robi cringe-cringe na kanale ${channel}`, 2],
-    [(person, channel) => `${person} pyta się czy pijemy`, 2],
+    [(person, channel) => `${person} pyta się czy pijemy`, 2],
     [(person, channel) => `${person} nie zapłacił składki w tym miesiącu`, 2],
     [(person, channel) => `${person} dostał kociej mordy`, 2],
     [(person, channel) => `${person} dedosuje huisa na kanale ${channel}`, 2],
