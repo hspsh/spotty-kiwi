@@ -72,5 +72,5 @@ export class DiscordController {
         await message.reply(reply)
     }
 
-    static REGEX = /^([a-zA-Z]+)(\++|-+)$/
+    static REGEX = /^([a-zA-Z]ඞ+)(\++|-+)$/
 }
