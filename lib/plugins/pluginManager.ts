@@ -7,6 +7,7 @@ import config from '../config'
 
 import whoisPlugin from './whois/plugin'
 import { JudgementPluginFactory } from './rel/plugin'
+import LibreLinksPlugin from './libreLinks/plugin'
 
 export type Command = {
     name: string
@@ -14,6 +15,7 @@ export type Command = {
     handle: (interaction: CommandInteraction) => Promise<void>
 }
 
+// TODO(LiquidLemon): replace with simple middleware to prevent work duplication
 export type MessageHandler = {
     predicate: (message: Message) => Promise<boolean>
     action: (message: Message) => Promise<void>
@@ -87,12 +89,17 @@ export default class PluginManager {
     }
 
     public async handleMessage(interaction: Message): Promise<void> {
+        if (interaction.author.id == interaction.client.user?.id) {
+            return
+        }
+
         const logContext = {
             messageContent: interaction.content,
             user: `${interaction.author.username}#${interaction.author.discriminator}`,
             userId: interaction.author.id,
         }
 
+        // TODO(LiquidLemon): simplify this monstrosity
         const messageHandler = (
             await Promise.all(
                 this.plugins
@@ -111,10 +118,8 @@ export default class PluginManager {
             return
         }
 
-        logger.info('Handling message.', logContext)
-
         try {
-            logger.info('Handling message.', logContext)
+            logger.debug('Handling message.', logContext)
             await messageHandler(interaction)
         } catch (error) {
             logger.error(
@@ -131,6 +136,7 @@ export default class PluginManager {
             await JudgementPluginFactory.createPlugin(
                 config.env.REL_DB_PATH || './sqlite.db'
             ),
+            LibreLinksPlugin,
         ])
     }
 }
