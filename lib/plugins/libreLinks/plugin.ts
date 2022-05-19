@@ -24,7 +24,7 @@ const isUnsignedInt = (num: string): boolean => {
 const getNitterLink = (link: string): string | undefined => {
     const url = new URL(link)
 
-    if (url.host != 'twitter.com') {
+    if (url.host != 'twitter.com' && url.host != 'mobile.twitter.com') {
         return
     }
 
