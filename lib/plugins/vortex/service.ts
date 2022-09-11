@@ -1,56 +1,40 @@
-import { EmbedBuilder } from 'discord.js';
-import axios from 'axios'
+import { MessageAttachment, MessageEmbed } from 'discord.js';
 
+// TODO(not7cd): use it later
 import MQTT from "async-mqtt";
-
 const client = MQTT.connect("tcp://mqtt.hack:1883")
 client.subscribe('homie')
 client.on('message', function (topic: string, message: string) {
   console.log(topic, message)
   if (topic.endsWith('$localIP')) {
-    
+
   }
 })
 
 const NODES = ['vortex-cam-1', 'vortex-cam-2', 'vortex-cam-3']
-const deviceIps = {
-
-}
 
 const getStatus = async (): Promise<object> => {
     
-    deviceIp = 
+    // TODO(not7cd): get through MQTT 
+    const deviceIp = "192.168.88.10"
 
-    const jpg = await axios.get(
-        `http://${deviceIp}/capture`
-    )
-    Promise.all(NODES.map((nodeId) => {
+    const jpg = `http://${deviceIp}/capture`
 
-    })).then((values) => {
-        console.log(values);
-      });
-
-
+    const file = new MessageAttachment(jpg, `${NODES[0]}.jpg`);
     // inside a command, event listener, etc.
-    const exampleEmbed = new EmbedBuilder()
+    const vortexEmbed = new MessageEmbed()
         .setColor(0x0099FF)
-        .setTitle('Some title')
-        .setURL('https://discord.js.org/')
-        .setAuthor({ name: 'Some name', iconURL: 'https://i.imgur.com/AfFp7pu.png', url: 'https://discord.js.org' })
-        .setDescription('Some description here')
-        .setThumbnail('https://i.imgur.com/AfFp7pu.png')
+        .setTitle('Wir zagłady')
+        .setURL('https://wiki.hsp.sh/vortex')
+        .setDescription('Naturalna siła oczyszczająca spejs z rupieci')
+        .setThumbnail('https://wiki.hsp.sh/_media/vortexofdoom.png')
         .addFields(
-            { name: 'Regular field title', value: 'Some value here' },
-            { name: '\u200B', value: '\u200B' },
-            { name: 'Inline field title', value: 'Some value here', inline: true },
-            { name: 'Inline field title', value: 'Some value here', inline: true },
+            { name: 'Tacka', value: 'n/a dni', inline: true },
         )
-        .addFields({ name: 'Inline field title', value: 'Some value here', inline: true })
-        .setImage('https://i.imgur.com/AfFp7pu.png')
+        .setImage(`attachment://${NODES[0]}.jpg`)
         .setTimestamp()
-        .setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
 
-    return { embeds: [exampleEmbed] };
+    return { embeds: [vortexEmbed], files: [file] };
 }
 
 
