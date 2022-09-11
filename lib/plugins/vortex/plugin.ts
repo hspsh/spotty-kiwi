@@ -1,6 +1,4 @@
-import {
-    CommandInteraction,
-} from 'discord.js'
+import { CommandInteraction } from 'discord.js'
 
 import { Plugin, Command, MessageHandler } from '../pluginManager'
 import service from './service'
