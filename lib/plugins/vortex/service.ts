@@ -7,13 +7,14 @@ client.subscribe('homie')
 client.on('message', function (topic: string, message: string) {
   console.log(topic, message)
   if (topic.endsWith('$localIP')) {
-
+    console.log("could contain node IP")
   }
 })
 
 const NODES = ['vortex-cam-1', 'vortex-cam-2', 'vortex-cam-3']
 
-const getStatus = async (): Promise<object> => {
+// TODO(not7cd): better return type
+const getStatus = async (): Promise<Record<string, unknown>> => {
     
     // TODO(not7cd): get through MQTT 
     const deviceIp = "192.168.88.10"

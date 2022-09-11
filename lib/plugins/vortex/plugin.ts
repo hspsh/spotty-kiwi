@@ -1,8 +1,5 @@
 import {
     CommandInteraction,
-    GuildMember,
-    Message,
-    TextChannel,
 } from 'discord.js'
 
 import { Plugin, Command, MessageHandler } from '../pluginManager'
