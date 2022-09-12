@@ -8,7 +8,8 @@ const commands: Command[] = [
         name: 'vortex',
         description: 'Sprawdź status "Vortex of Doom"',
         handle: async (interaction: CommandInteraction): Promise<void> => {
-            await interaction.reply(await service.getStatus())
+            await interaction.deferReply();
+            await interaction.editReply(await service.getStatus())
         },
     },
 ]
