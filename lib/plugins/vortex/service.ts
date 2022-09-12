@@ -1,16 +1,5 @@
 import { MessageAttachment, MessageEmbed } from 'discord.js'
 
-// TODO(not7cd): use it later
-import MQTT from 'async-mqtt'
-const client = MQTT.connect('tcp://mqtt.hack:1883')
-client.subscribe('homie')
-client.on('message', function (topic: string, message: string) {
-    console.log(topic, message)
-    if (topic.endsWith('$localIP')) {
-        console.log('could contain node IP')
-    }
-})
-
 const NODES = ['vortex-cam-1', 'vortex-cam-2', 'vortex-cam-3']
 
 // TODO(not7cd): better return type
