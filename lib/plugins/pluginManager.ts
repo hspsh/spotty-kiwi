@@ -6,6 +6,7 @@ import logger from '../logger'
 import config from '../config'
 
 import whoisPlugin from './whois/plugin'
+import vortexPlugin from './vortex/plugin'
 import { JudgementPluginFactory } from './rel/plugin'
 import LibreLinksPlugin from './libreLinks/plugin'
 
@@ -133,6 +134,7 @@ export default class PluginManager {
     static async create(): Promise<PluginManager> {
         return new PluginManager([
             whoisPlugin,
+            vortexPlugin,
             await JudgementPluginFactory.createPlugin(
                 config.env.REL_DB_PATH || './sqlite.db'
             ),

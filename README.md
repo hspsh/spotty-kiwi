@@ -22,3 +22,11 @@ Configuration is done through environment variables:
 yarn install
 yarn dev  # bot will restart on changes
 ```
+
+## Contributing
+
+```
+# before PR
+yarn lint
+yarn style
+```
