@@ -8,7 +8,6 @@ import config from '../config'
 import whoisPlugin from './whois/plugin'
 import vortexPlugin from './vortex/plugin'
 import { JudgementPluginFactory } from './rel/plugin'
-import LibreLinksPlugin from './libreLinks/plugin'
 
 export type Command = {
     name: string
