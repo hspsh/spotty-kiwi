@@ -138,7 +138,7 @@ export default class PluginManager {
             await JudgementPluginFactory.createPlugin(
                 config.env.REL_DB_PATH || './sqlite.db'
             ),
-            LibreLinksPlugin,
+            //LibreLinksPlugin, # Nitter doesn't work because of Twitter changes
         ])
     }
 }
