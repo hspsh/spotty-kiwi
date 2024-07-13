@@ -46,9 +46,9 @@ type MessageGenerator = (person: string, channel: string) => string
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const messages: [MessageGenerator, number][] = [
-    [(person, channel) => `${person} mówi ding-dong na kanale ${channel}`, 4],
-    [(person, channel) => `${person} robi puk-puk na kanale ${channel}`, 4],
-    [(person, channel) => `${person} robi honk-honk na kanale ${channel}`, 4],
+    [(person, channel) => `${person} mówi ding-dong na kanale ${channel}`, 2],
+    [(person, channel) => `${person} robi puk-puk na kanale ${channel}`, 2],
+    [(person, channel) => `${person} robi honk-honk na kanale ${channel}`, 2],
     [
         (person, channel) =>
             `${person} robi cringe-cringe na kanale ${channel}`,
@@ -73,6 +73,19 @@ const messages: [MessageGenerator, number][] = [
             `${person} mówi ri,i,i,i,i,i,i na kanale ${channel}`,
         2,
     ],
+    [
+        (person, channel) =>
+            `${person} lubi całować chłopców`,
+        1,
+    ],
+    [(person, channel) => `${person} nie posprzątał po sobie i teraz mu głupio`, 2],
+    [(person, channel) => `${person}, ty psuju`, 2],
+    [
+        (person, channel) => 
+            `not7cd robi puk-puk na kanale ${channel}. Żartowałem, to był ${person}`,
+        1
+    ],
+    [(person, channel) => `${person} znowu propaguje lewacką propagande`, 2],
 ]
 
 const getWeightedRandomMessage = (person: string, channel: string): string => {
